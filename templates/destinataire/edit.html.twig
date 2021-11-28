@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un destinataire - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Modifier un destinataire</h1>
+
+    {{ include('destinataire/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('destinataire_index') }}">back to list</a>
+
+    {{ include('destinataire/_delete_form.html.twig') }}
+{% endblock %}

@@ -6,12 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
+ * @ORM\Table(name="`utilisateur`")
+ * @UniqueEntity(fields={"username"}, message="Il y a déjà un compte avec cet identifiant.")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -23,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string",name="identifiant", length=180, unique=true)
      */
     private $username;
 
@@ -34,29 +36,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="mot_de_passe")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $title;
+    private $titre;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $firstName;
+    private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $phoneNumber;
+    private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -64,38 +66,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $birthDate;
+    private $adresse;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $address;
+    private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $zipCode;
+    private $localite;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity=Courrier::class, mappedBy="utilisateur", orphanRemoval=true)
      */
-    private $city;
+    private $courriers;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\OneToMany(targetEntity=Destinataire::class, mappedBy="utilisateur", orphanRemoval=true)
      */
-    private $licenses = [];
-
-    /**
-     * @ORM\OneToMany(targetEntity=Courier::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $letters;
+    private $destinataires;
 
     public function __construct()
     {
-        $this->letters = new ArrayCollection();
+        $this->destinataires = new ArrayCollection();
+        $this->courriers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,50 +180,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getTitle(): ?string
+    public function getTitre(): ?string
     {
-        return $this->title;
+        return $this->titre;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitre(?string $titre): self
     {
-        $this->title = $title;
+        $this->titre = $titre;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getNom(): ?string
     {
-        return $this->name;
+        return $this->nom;
     }
 
-    public function setName(?string $name): self
+    public function setNom(?string $nom): self
     {
-        $this->name = $name;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getFirstName(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->firstName;
+        return $this->prenom;
     }
 
-    public function setFirstName(?string $firstName): self
+    public function setPrenom(?string $prenom): self
     {
-        $this->firstName = $firstName;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->phoneNumber;
+        return $this->telephone;
     }
 
-    public function setPhoneNumber(?string $phoneNumber): self
+    public function setTelephone(?string $telephone): self
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->telephone = $telephone;
 
         return $this;
     }
@@ -242,90 +240,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getAdresse(): ?string
     {
-        return $this->birthDate;
+        return $this->adresse;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    public function setAdresse(?string $adresse): self
     {
-        $this->birthDate = $birthDate;
+        $this->adresse = $adresse;
 
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getCodePostal(): ?string
     {
-        return $this->address;
+        return $this->codePostal;
     }
 
-    public function setAddress(?string $address): self
+    public function setCodePostal(?string $codePostal): self
     {
-        $this->address = $address;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getLocalite(): ?string
     {
-        return $this->zipCode;
+        return $this->localite;
     }
 
-    public function setZipCode(?string $zipCode): self
+    public function setLocalite(?string $localite): self
     {
-        $this->zipCode = $zipCode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(?string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getLicenses(): ?array
-    {
-        return $this->licenses;
-    }
-
-    public function setLicenses(?array $licenses): self
-    {
-        $this->licenses = $licenses;
+        $this->localite = $localite;
 
         return $this;
     }
 
     /**
-     * @return Collection|Courier[]
+     * @return Collection|Courrier[]
      */
-    public function getLetters(): Collection
+    public function getCourriers(): Collection
     {
-        return $this->letters;
+        return $this->courriers;
     }
 
-    public function addLetter(Courier $letter): self
+    public function addCourrier(Courrier $courrier): self
     {
-        if (!$this->letters->contains($letter)) {
-            $this->letters[] = $letter;
-            $letter->setUser($this);
+        if (!$this->courriers->contains($courrier)) {
+            $this->courriers[] = $courrier;
+            $courrier->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeLetter(Courier $letter): self
+    public function removeCourrier(Courrier $courrier): self
     {
-        if ($this->letters->removeElement($letter)) {
+        if ($this->courriers->removeElement($courrier)) {
             // set the owning side to null (unless already changed)
-            if ($letter->getUser() === $this) {
-                $letter->setUser(null);
+            if ($courrier->getUtilisateur() === $this) {
+                $courrier->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Destinataire[]
+     */
+    public function getDestinataires(): Collection
+    {
+        return $this->destinataires;
+    }
+
+    public function addDestinataire(Destinataire $destinataire): self
+    {
+        if (!$this->destinataires->contains($destinataire)) {
+            $this->destinataires[] = $destinataire;
+            $destinataire->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinataire(Destinataire $destinataire): self
+    {
+        if ($this->destinataires->removeElement($destinataire)) {
+            // set the owning side to null (unless already changed)
+            if ($destinataire->getUtilisateur() === $this) {
+                $destinataire->setUtilisateur(null);
             }
         }
 

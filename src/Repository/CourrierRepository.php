@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Courier;
+use App\Entity\Courrier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Courier|null find($id, $lockMode = null, $lockVersion = null)
- * @method Courier|null findOneBy(array $criteria, array $orderBy = null)
- * @method Courier[]    findAll()
- * @method Courier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Courrier|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Courrier|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Courrier[]    findAll()
+ * @method Courrier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CourierRepository extends ServiceEntityRepository
+class CourrierRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Courier::class);
+        parent::__construct($registry, Courrier::class);
     }
 
     // /**
-    //  * @return Courier[] Returns an array of Courier objects
+    //  * @return Courrier[] Returns an array of Courrier objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CourierRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Courier
+    public function findOneBySomeField($value): ?Courrier
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

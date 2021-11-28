@@ -1,0 +1,71 @@
+<div class="container text-center">
+    <h1 class="py-5 mb-0">AJOUTER UN DESTINATAIRE</h1>
+
+    {{ form_start(form) }}
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(form.titre) }}
+            </div>   
+            <div class="col">
+                {{ form_row(form.nom) }}  
+            </div>
+            <div class="col">
+                {{ form_row(form.prenom) }}  
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col"> 
+                {{ form_row(form.fonction) }}
+            </div> 
+            <div class="col"> 
+                {{ form_label(form.denomination) }} <span class="text-danger">*</span>
+                {{ form_widget(form.denomination) }}
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(form.telephone) }}
+            </div>   
+            <div class="col">
+                {{ form_row(form.email) }}  
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col"> 
+                {{ form_row(form.adresse) }}
+            </div> 
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(form.codePostal) }}
+            </div>   
+            <div class="col">
+                {{ form_row(form.localite) }}  
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col"> 
+                {{ form_row(form.commentaire) }}
+            </div> 
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col d-flex justify-content-end align-items-center">
+                <p class="text-danger mt-3">Les champs marqués d'une * sont obligatoires.</p>
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col d-flex justify-content-end gap-2">
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <a class="btn btn-secondary" href="{{ path('home_index') }}">Retour</a>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>

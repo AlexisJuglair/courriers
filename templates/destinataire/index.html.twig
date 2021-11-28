@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Destinataire index{% endblock %}
+
+{% block body %}
+    <h1>Destinataire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Fonction</th>
+                <th>Denomination</th>
+                <th>Adresse</th>
+                <th>CodePostal</th>
+                <th>Localite</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Commentaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for destinataire in destinataires %}
+            <tr>
+                <td>{{ destinataire.id }}</td>
+                <td>{{ destinataire.titre }}</td>
+                <td>{{ destinataire.nom }}</td>
+                <td>{{ destinataire.prenom }}</td>
+                <td>{{ destinataire.fonction }}</td>
+                <td>{{ destinataire.denomination }}</td>
+                <td>{{ destinataire.adresse }}</td>
+                <td>{{ destinataire.codePostal }}</td>
+                <td>{{ destinataire.localite }}</td>
+                <td>{{ destinataire.telephone }}</td>
+                <td>{{ destinataire.email }}</td>
+                <td>{{ destinataire.commentaire }}</td>
+                <td>
+                    <a href="{{ path('destinataire_show', {'id': destinataire.id}) }}">show</a>
+                    <a href="{{ path('destinataire_edit', {'id': destinataire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('destinataire_new') }}">Create new</a>
+{% endblock %}

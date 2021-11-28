@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Courrier{% endblock %}
+
+{% block body %}
+    <h1>Courrier</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ courrier.id }}</td>
+            </tr>
+            <tr>
+                <th>Objet</th>
+                <td>{{ courrier.objet }}</td>
+            </tr>
+            <tr>
+                <th>OffreReference</th>
+                <td>{{ courrier.offreReference }}</td>
+            </tr>
+            <tr>
+                <th>DateCreation</th>
+                <td>{{ courrier.dateCreation ? courrier.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateModification</th>
+                <td>{{ courrier.dateModification ? courrier.dateModification|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateEnvoi</th>
+                <td>{{ courrier.dateEnvoi ? courrier.dateEnvoi|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateRelance</th>
+                <td>{{ courrier.dateRelance ? courrier.dateRelance|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Paragraphe1</th>
+                <td>{{ courrier.paragraphe1 }}</td>
+            </tr>
+            <tr>
+                <th>Paragraphe2</th>
+                <td>{{ courrier.paragraphe2 }}</td>
+            </tr>
+            <tr>
+                <th>Paragraphe3</th>
+                <td>{{ courrier.paragraphe3 }}</td>
+            </tr>
+            <tr>
+                <th>Paragraphe4</th>
+                <td>{{ courrier.paragraphe4 }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ courrier.statut }}</td>
+            </tr>
+            <tr>
+                <th>NosReferences</th>
+                <td>{{ courrier.nosReferences }}</td>
+            </tr>
+            <tr>
+                <th>VosReferences</th>
+                <td>{{ courrier.vosReferences }}</td>
+            </tr>
+            <tr>
+                <th>AnnonceCopie</th>
+                <td>{{ courrier.annonceCopie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('home_index') }}">back to list</a>
+
+    <a href="{{ path('home_edit', {'id': courrier.id}) }}">edit</a>
+
+    {{ include('home/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titre ~ " - " ~ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        <h1 class="py-5 mb-0">{{ titre|upper }}</h1>
+
+    {{ form_start(registrationForm) }}
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_label(registrationForm.username) }} <span class="text-danger">*</span>
+                {{ form_widget(registrationForm.username) }}
+            </div>   
+            <div class="col">
+                {{ form_label(registrationForm.plainPassword.first) }} <span class="text-danger">*</span>
+                {{ form_widget(registrationForm.plainPassword.first) }}
+            </div>
+            <div class="col">
+                {{ form_label(registrationForm.plainPassword.second) }} <span class="text-danger">*</span>
+                {{ form_widget(registrationForm.plainPassword.second) }}
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(registrationForm.titre) }}
+            </div> 
+            <div class="col"> 
+                {{ form_row(registrationForm.nom) }}
+            </div> 
+            <div class="col"> 
+                {{ form_row(registrationForm.prenom) }}
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(registrationForm.email) }}
+            </div> 
+            <div class="col"> 
+                {{ form_row(registrationForm.telephone) }}
+            </div> 
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(registrationForm.adresse) }}
+            </div> 
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col">
+                {{ form_row(registrationForm.codePostal) }}
+            </div> 
+            <div class="col"> 
+                {{ form_row(registrationForm.localite) }}
+            </div> 
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col d-flex justify-content-end">
+                <p class="text-danger">Les champs marqués d'une * sont obligatoires.</p>
+            </div>
+        </div>
+
+        <div class="row my-3 mx-5">
+            <div class="col d-flex justify-content-end gap-2">
+                {% if titre == "Modifier mes informations" %}
+                    <a class="btn btn-secondary" href="{{ path('home_index') }}">Retour</a>
+                {% endif %}
+                <button type="submit" class="btn btn-primary">{{ bouton }}</button>
+            </div>
+        </div>
+    {{ form_end(registrationForm) }}
+{% endblock %}

@@ -1,0 +1,43 @@
+body
+{
+    font-family: 'Roboto', sans-serif; 
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-family: 'Courier Prime', monospace;
+    font-weight: bold;
+}
+
+h2, h3, h4, h5, h6
+{
+    font-style: italic;
+}
+
+h1
+{
+    font-size: 3rem;
+}
+
+/* HEADER  */
+
+/* .navbar-header 
+{
+    float: left;
+    padding: .5rem;
+    width: 100%;
+}
+
+.navbar-brand 
+{
+    font-size: 1.5rem;
+} */
+
+/* CONNEXION */
+
+.horizontal-bar 
+{
+    height: 0px;
+    border: 1px solid #adb5bd;
+    transform: rotate(90deg); 
+}
