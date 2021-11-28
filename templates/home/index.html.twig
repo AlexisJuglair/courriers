@@ -102,7 +102,6 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>ID</th>
                                             <th>Objet</th>
                                             <th>OffreReference</th>
                                             <th>DateCreation</th>
@@ -120,8 +119,7 @@
                                         {% else %}
                                             <tr>         
                                         {% endif %}
-                                                <td><input class="form-check-input" type="checkbox" name="courriers[]" value="{{ courrier.id }}" id="courriers{{ courrier.id }}"></td>
-                                                <td>{{ courrier.id }}</td>
+                                                <td><input class="form-check-input check-courrier" type="checkbox" name="courriers[]" value="{{ courrier.id }}" id="courriers{{ courrier.id }}"></td>
                                                 <td>{{ courrier.objet }}</td>
                                                 <td>{{ courrier.offreReference }}</td>
                                                 <td>{{ courrier.dateCreation ? courrier.dateCreation|date('d-m-Y') : '' }}</td>
@@ -140,8 +138,8 @@
                                                 <a class="btn btn-primary me-2" href="#">Imprimer</a>
                                                 <a class="btn btn-secondary me-2" href="{{ path('home_new') }}">Ajouter</a>
                                                 <a class="btn btn-secondary me-2" href="#">Dupliquer</a>
-                                                <input type="submit" class="btn btn-secondary" formaction={{ path('home_edit') }} value="Modifier">
-                                                <input type="submit" class="btn btn-danger" formaction={{ path('home_delete') }} value="Supprimer">
+                                                <input type="submit" id="modif-courrier" class="btn btn-secondary" formaction="{{ path('home_index') }}" value="Modifier">
+                                                <input type="submit" class="btn btn-danger" formaction="{{ path('home_delete') }}" value="Supprimer">
                                             </td>
                                         </tr>
                                         <tr>

@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET", "POST"})
      */
     public function index(CourrierRepository $courrierRepository, DestinataireRepository $destinataireRepository): Response
     {
@@ -84,49 +84,28 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/courrier/edit", name="edit", methods={"GET","POST"})
+     * @Route("/courrier/{id}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(CourrierRepository $courrierRepository, Request $request): Response
+    public function edit(Request $request, Courrier $courrier): Response
     {
-        $referer = $request->headers->get('referer');
-        $refererPathInfo = Request::create($referer)->getPathInfo();
-        $current = $request->attributes->get('_route');
+        $form = $this->createForm(CourrierType::class, $courrier);
+        $form->handleRequest($request);
 
-        if ($refererPathInfo == "/") 
+        if ($form->isSubmitted() && $form->isValid()) 
         {
-            if (isset($_POST['courriers']) && count($_POST['courriers']) == 1)
-            {
-                $courrier = $courrierRepository->find($_POST['courriers'][0]);
-                $form = $this->createForm(CourrierType::class, $courrier);
-                $form->handleRequest($request);
-        
-                return $this->renderForm('home/_form.html.twig', [
-                    'courrier' => $courrier,
-                    'form' => $form,
-                    'action' => 'Modifier'
-                ]);
-            }
+            $courrier->setDateModification(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', "Le courrier a été modifié !");
+
+            return $this->redirectToRoute('home_index', [], Response::HTTP_SEE_OTHER); 
         }
 
-        else if ($current == 'home_edit')
-        {
-            $courrier_id = $request->request->get('courrier')['id'];
-            $courrier = $courrierRepository->find($courrier_id);
-
-            $form = $this->createForm(CourrierType::class, $courrier);
-            dd($courrier);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) 
-            {
-                $courrier->setDateModification(new \DateTime());
-                $this->getDoctrine()->getManager()->flush();
-
-                $this->addFlash('success', "Le courrier a été modifié !");
-            }
-        }
-
-        return $this->redirectToRoute('home_index', [], Response::HTTP_SEE_OTHER); 
+        return $this->renderForm('home/_form.html.twig', [
+            'courrier' => $courrier,
+            'form' => $form,
+            'action' => 'Modifier'
+        ]);     
     }
 
     /**
@@ -148,6 +127,7 @@ class HomeController extends AbstractController
             }
         }
 
+        $this->addFlash('success', "Les courriers  été supprimés !");
         return $this->redirectToRoute('home_index', [], Response::HTTP_SEE_OTHER);
     }
 }
